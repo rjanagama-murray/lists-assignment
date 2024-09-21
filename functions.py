@@ -12,11 +12,13 @@ def get_item_information(item_code):
       return item_name.encode("ascii", "ignore").decode(), int(item_price)
 
 def display_items():
-      
-      print("Menu:")
-      for item in data.menu_items:
-          item_number, item_name, item_price = item.split(' ')
-          print(f"{item_number}: {item_name} - ${item_price}")
+  
+
+    print("Menu:")
+    for item in data.menu_items:
+        item_number, item_name, item_price = item.split(' ')
+        print(f"{item_number}: {item_name} - ${item_price}")
+
 
 def get_item_number():
     #Prompts user for a valid item code and quantity.
@@ -46,3 +48,17 @@ def display_current_order(order):
     for code, name, qty, price in order:
         price = int(price)  # Ensure price is an integer
         print(f"{code+name} - ${price }")
+        
+def calculate_subtotal(order):
+    """Calculates the subtotal of the current order."""
+    subtotal = 0
+    j=0
+    for _, _, quantity, price in order:
+      price=int(price)
+      for k in data.menu_items:
+        i=k[len(k)-1]
+        i=int(i)
+        j+=i*price
+        break
+      subtotal += j * price
+    return subtotal
