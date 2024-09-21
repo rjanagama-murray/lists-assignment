@@ -9,28 +9,32 @@ def show_main_menu():
     print('N for a new order')
     print("C to change the current order")
     print('X for close orders and print the check')
+    print('R to reset the order')
     print('Q for quit')
-    user_menu_choice = input('Your input: ')
+    user_menu_choice = input('Your choice: ')
     if user_menu_choice in 'Qq':
       break
     elif user_menu_choice in 'Xx':
       print('This option prints the list of items ordered, extended price, total, Taxes, and Grand total ')
-      print_check(current_order) 
+      print_check(current_order)
     elif user_menu_choice in 'Cc':
-      current_order = change_order(current_order)  # Change items in the order  
+      current_order = change_order(current_order)  # Change items in the order
     elif user_menu_choice in 'Nn':
       print('New order')
       while input('Add a dish? y/n: ') in 'Yy':
         ordered_item = functions.get_item_number()
         current_order.append(ordered_item)
-      print('your Current orders', current_order)  
+      print('Current order', current_order)
+    elif user_menu_choice in 'Rr':
+       current_order=[]
+       print('order is reset')
     else:
       make_order(user_menu_choice.upper())  #calls a function for adding to the orders
 
-def make_order(order):
+def make_order(menu_choice):
   print("New order")
   while True:
-    
+
     user_selection = functions.get_item_number()
     if user_selection == 'done':
         break
@@ -51,7 +55,7 @@ def make_order(order):
 
 def close_order(menu_choice):
   print('Functionality for menu choice ', menu_choice)
-  
+
 def change_order(order):
     print("Change order")
     functions.display_current_order(order)
@@ -62,19 +66,19 @@ def change_order(order):
             order[i]=new_quantity
             
             print(order)
+            #order[i] = (code+name, new_quantity, price)
             break
     return order
-  
+
 def print_check(order):
-    print("Here is your check:")
+    print("your check:")
     subtotal = functions.calculate_subtotal(order)
-    tax = subtotal * 0.05  # Assuming 5% tax
+    tax = subtotal * 0.06  # Assuming 6% tax
     total = subtotal + tax
     functions.display_current_order(order)
     print(f"Subtotal: ${subtotal:.2f}")
     print(f"Tax: ${tax:.2f}")
     print(f"Total: ${total:.2f}")  
-
 
 
 if __name__ == '_main_':
